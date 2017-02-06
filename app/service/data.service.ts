@@ -34,7 +34,7 @@ export class DataService {
     this.apiUrl = this.config.domainApi + "/" + this.config.serviceBase + "/" + this.controllerApi + "/" + this.actionApi;
   }
 
-  get(controllerName: string, actionName?: string): Observable<Object[]>{
+  get(controllerName: string, actionName?: string): Observable<any>{
     this.setController(controllerName);
     this.setAction(actionName);
     this.buildApiUrl();

@@ -18,9 +18,6 @@ var HeroFormComponent = (function () {
         this.model = new hero_1.Hero(18, 'Dr Duy', this.powers[0], 'Chuck oversheet');
         this.submitted = false;
     }
-<<<<<<< HEAD
-    HeroFormComponent.prototype.onSubmit = function () {
-=======
     ;
     HeroFormComponent.prototype.getHeroes = function () {
     };
@@ -32,8 +29,7 @@ var HeroFormComponent = (function () {
     HeroFormComponent.prototype.gotoDetail = function () {
         this.router.navigate(['/detail', this.selectedHero.id]);
     };
-    HeroFormComponent.prototype.onsubmit = function () {
->>>>>>> refs/remotes/origin/master
+    HeroFormComponent.prototype.onSubmit = function () {
         this.submitted = true;
         console.log("on submit>> ", this.model);
     };

@@ -23,7 +23,7 @@ export class LoginComponent{
 	getAllLogin(){		
 	    this.dataService.get("login","GetAll")
 	      	.subscribe(
-                     result => this.logins = result,
+                     result => console.log("result >> ", result),
                      error =>  this.errorMessage = <any>error);
 	}
 

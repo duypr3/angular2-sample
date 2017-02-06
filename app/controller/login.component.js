@@ -19,7 +19,7 @@ var LoginComponent = (function () {
     LoginComponent.prototype.getAllLogin = function () {
         var _this = this;
         this.dataService.get("login", "GetAll")
-            .subscribe(function (result) { return _this.logins = result; }, function (error) { return _this.errorMessage = error; });
+            .subscribe(function (result) { return console.log("result >> ", result); }, function (error) { return _this.errorMessage = error; });
     };
     // addLogin(){
     // 	console.log("username ", this.item.username);
