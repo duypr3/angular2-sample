@@ -1,0 +1,5 @@
+-- // Npm install last version // ---
+	npm install npm@latest -g
+
+--// quick start //
+https://github.com/angular/quickstart
