@@ -12,7 +12,7 @@ import { Config }  from '../service/config';
 
 export class DataService {  
 
-	private headers = new Headers({'Content-Type': 'application/json, text/plain, */*'});
+	private headers = new Headers({'Content-Type': 'application/json'});
   private options = new RequestOptions({ headers: this.headers });
 
   //private apiUrl = 'http://localhost:32760/api/login/AddOrUpdate';  // URL to web api
@@ -34,7 +34,7 @@ export class DataService {
     this.apiUrl = this.config.domainApi + "/" + this.config.serviceBase + "/" + this.controllerApi + "/" + this.actionApi;
   }
 
-  get(controllerName: string, actionName?: string): Observable<Login>{
+  get(controllerName: string, actionName: string): Observable<any>{
     this.setController(controllerName);
     this.setAction(actionName);
     this.buildApiUrl();
@@ -45,7 +45,29 @@ export class DataService {
                     .catch(this.handleError);
   }
   
+  getByParams(controllerName: string, actionName: string, params: string): Observable<any>{
+    this.setController(controllerName);
+    console.log("paramss ",params);
+    let paramsURL = new URLSearchParams(params);
+    console.log("paramURL  ", paramsURL);
 
+    this.setAction(actionName);
+    this.buildApiUrl();
+    console.log("data>>> ",params);    
+    return this.http.get(this.apiUrl)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+  addOrUpdate(controllerName: string, actionName: string, data: string): Observable<any>{
+    this.setController(controllerName);
+    this.setAction(actionName);
+    this.buildApiUrl();
+    console.log("data>>> ",data);
+    //let body = JSON.stringify(data);
+    return this.http.post(this.apiUrl, data, this.options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
 
   addLogin(username: string, password: string) : Observable<Login> {
     let login = new Login(null,username,password);
@@ -64,7 +86,6 @@ export class DataService {
   }
 
   private extractData(res: Response) {
-    console.log('res >>> ', res);
     let body = res.json();
     return body || { };
   }

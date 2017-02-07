@@ -19,7 +19,7 @@ var DataService = (function () {
     function DataService(http, config) {
         this.http = http;
         this.config = config;
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json, text/plain, */*' });
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         this.options = new http_1.RequestOptions({ headers: this.headers });
     }
     DataService.prototype.setController = function (controllerName) {
@@ -44,6 +44,28 @@ var DataService = (function () {
             .map(this.extractData)
             .catch(this.handleError);
     };
+    DataService.prototype.getByParams = function (controllerName, actionName, params) {
+        this.setController(controllerName);
+        console.log("paramss ", params);
+        var paramsURL = new http_1.URLSearchParams(params);
+        console.log("paramURL  ", paramsURL);
+        this.setAction(actionName);
+        this.buildApiUrl();
+        console.log("data>>> ", params);
+        return this.http.get(this.apiUrl)
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
+    DataService.prototype.addOrUpdate = function (controllerName, actionName, data) {
+        this.setController(controllerName);
+        this.setAction(actionName);
+        this.buildApiUrl();
+        console.log("data>>> ", data);
+        //let body = JSON.stringify(data);
+        return this.http.post(this.apiUrl, data, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
     DataService.prototype.addLogin = function (username, password) {
         var login = new login_1.Login(null, username, password);
         var body = JSON.stringify({ username: username });
@@ -58,7 +80,6 @@ var DataService = (function () {
             .catch(this.handleError);
     };
     DataService.prototype.extractData = function (res) {
-        console.log('res >>> ', res);
         var body = res.json();
         return body || {};
     };

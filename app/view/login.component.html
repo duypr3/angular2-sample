@@ -26,6 +26,7 @@
 		<!-- <button type="submit" class="btn btn-default">Submit</button> -->
 		<button type="button" class="btn btn-default" (click)="addLogin(username.value,password.value)">Add</button>
 		<button type="button" class="btn btn-default" (click)="getAllLogin()">Get All</button>
+		<button type="button" class="btn btn-default" (click)="getByParamsLogin()">Get By Params</button>
 		<ul class="logins">
 			<li *ngFor="let login of logins">
 				<span class="badge">{{login.ID}}</span>

@@ -23,10 +23,25 @@ export class LoginComponent{
 	getAllLogin(){		
 	    this.dataService.get("login","GetAll")
 	      	.subscribe(
-                     result => console.log("result >> ", result),
+                     result => this.logins = result,
                      error =>  this.errorMessage = <any>error);
 	}
 
+	getByParamsLogin(){		
+		interface params {
+			readonly username: string;
+			readonly password: string;
+			//constructor(username: string, password: string){}
+		}
+		let tes: params("abc","123");
+		console.log('test ', tes);
+		let paramsString = JSON.stringify(new params("abc","123"));
+		console.log("paramsString ", paramsString);
+	    this.dataService.getByParams("login","GetByInfo",paramsString)
+	      	.subscribe(
+                     result => this.logins = result,
+                     error =>  this.errorMessage = <any>error);
+	}
 	// addLogin(){
 	// 	console.log("username ", this.item.username);
 	// 	this.dataService.addLogin(this.item.username, this.item.password)
@@ -37,9 +52,12 @@ export class LoginComponent{
 
 	addLogin(user: string, pass: string){
 		console.log("username ", user);
-		this.dataService.addLogin(user, pass)
+		this.item.username = user;
+		this.item.password = pass;
+	
+		this.dataService.addOrUpdate("login","AddOrUpdateV1", JSON.stringify(this.item))
 			.subscribe(
-                     result => this.logins.push(result),
+                     result => console.log('Type result: ',typeof(result)),
                      error =>  this.errorMessage = <any>error);
 	}
 }

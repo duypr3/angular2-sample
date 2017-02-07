@@ -19,7 +19,16 @@ var LoginComponent = (function () {
     LoginComponent.prototype.getAllLogin = function () {
         var _this = this;
         this.dataService.get("login", "GetAll")
-            .subscribe(function (result) { return console.log("result >> ", result); }, function (error) { return _this.errorMessage = error; });
+            .subscribe(function (result) { return _this.logins = result; }, function (error) { return _this.errorMessage = error; });
+    };
+    LoginComponent.prototype.getByParamsLogin = function () {
+        var _this = this;
+        var tes = ("abc", "123");
+        console.log('test ', tes);
+        var paramsString = JSON.stringify(new params("abc", "123"));
+        console.log("paramsString ", paramsString);
+        this.dataService.getByParams("login", "GetByInfo", paramsString)
+            .subscribe(function (result) { return _this.logins = result; }, function (error) { return _this.errorMessage = error; });
     };
     // addLogin(){
     // 	console.log("username ", this.item.username);
@@ -31,8 +40,10 @@ var LoginComponent = (function () {
     LoginComponent.prototype.addLogin = function (user, pass) {
         var _this = this;
         console.log("username ", user);
-        this.dataService.addLogin(user, pass)
-            .subscribe(function (result) { return _this.logins.push(result); }, function (error) { return _this.errorMessage = error; });
+        this.item.username = user;
+        this.item.password = pass;
+        this.dataService.addOrUpdate("login", "AddOrUpdateV1", JSON.stringify(this.item))
+            .subscribe(function (result) { return console.log('Type result: ', typeof (result)); }, function (error) { return _this.errorMessage = error; });
     };
     LoginComponent = __decorate([
         core_1.Component({
