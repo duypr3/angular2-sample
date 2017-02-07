@@ -35,6 +35,12 @@ var DataService = (function () {
     DataService.prototype.buildApiUrl = function () {
         this.apiUrl = this.config.domainApi + "/" + this.config.serviceBase + "/" + this.controllerApi + "/" + this.actionApi;
     };
+    DataService.prototype.buildApiUrlWithActionName = function (controllerName, actionName) {
+        this.setController(controllerName);
+        this.setAction(actionName);
+        this.buildApiUrl();
+        return this.apiUrl;
+    };
     DataService.prototype.get = function (controllerName, actionName) {
         this.setController(controllerName);
         this.setAction(actionName);
@@ -44,7 +50,7 @@ var DataService = (function () {
             .map(this.extractData)
             .catch(this.handleError);
     };
-    DataService.prototype.getByParams = function (controllerName, actionName, params) {
+    DataService.prototype.getWithParams = function (controllerName, actionName, params) {
         this.setController(controllerName);
         console.log("paramss ", params);
         var paramsURL = new http_1.URLSearchParams(params);
@@ -63,6 +69,15 @@ var DataService = (function () {
         console.log("data>>> ", data);
         //let body = JSON.stringify(data);
         return this.http.post(this.apiUrl, data, this.options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
+    DataService.prototype.delete = function (controllerName, actionName) {
+        this.setController(controllerName);
+        this.setAction(actionName);
+        this.buildApiUrl();
+        //let body = JSON.stringify(data);
+        return this.http.post(this.apiUrl, this.options)
             .map(this.extractData)
             .catch(this.handleError);
     };

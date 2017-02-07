@@ -22,13 +22,11 @@ var LoginComponent = (function () {
             .subscribe(function (result) { return _this.logins = result; }, function (error) { return _this.errorMessage = error; });
     };
     LoginComponent.prototype.getByParamsLogin = function () {
-        var _this = this;
-        var tes = ("abc", "123");
-        console.log('test ', tes);
-        var paramsString = JSON.stringify(new params("abc", "123"));
-        console.log("paramsString ", paramsString);
-        this.dataService.getByParams("login", "GetByInfo", paramsString)
-            .subscribe(function (result) { return _this.logins = result; }, function (error) { return _this.errorMessage = error; });
+        // console.log("paramsString ", paramsString);
+        //    this.dataService.getByParams("login","GetByInfo",paramsString)
+        //      	.subscribe(
+        //                    result => this.logins = result,
+        //                    error =>  this.errorMessage = <any>error);
     };
     // addLogin(){
     // 	console.log("username ", this.item.username);
@@ -44,6 +42,11 @@ var LoginComponent = (function () {
         this.item.password = pass;
         this.dataService.addOrUpdate("login", "AddOrUpdateV1", JSON.stringify(this.item))
             .subscribe(function (result) { return console.log('Type result: ', typeof (result)); }, function (error) { return _this.errorMessage = error; });
+    };
+    LoginComponent.prototype.deleteLogin = function () {
+        var _this = this;
+        this.dataService.delete("login", "Delete?username=abc")
+            .subscribe(function (result) { return console.log('Type result: ', result, typeof (result)); }, function (error) { return _this.errorMessage = error; });
     };
     LoginComponent = __decorate([
         core_1.Component({

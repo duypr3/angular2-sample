@@ -34,6 +34,13 @@ export class DataService {
     this.apiUrl = this.config.domainApi + "/" + this.config.serviceBase + "/" + this.controllerApi + "/" + this.actionApi;
   }
 
+  buildApiUrlWithActionName(controllerName: string, actionName: string){
+    this.setController(controllerName);
+    this.setAction(actionName);
+    this.buildApiUrl();
+
+    return this.apiUrl;
+  }
   get(controllerName: string, actionName: string): Observable<any>{
     this.setController(controllerName);
     this.setAction(actionName);
@@ -45,7 +52,7 @@ export class DataService {
                     .catch(this.handleError);
   }
   
-  getByParams(controllerName: string, actionName: string, params: string): Observable<any>{
+  getWithParams(controllerName: string, actionName: string, params: string): Observable<any>{
     this.setController(controllerName);
     console.log("paramss ",params);
     let paramsURL = new URLSearchParams(params);
@@ -65,6 +72,16 @@ export class DataService {
     console.log("data>>> ",data);
     //let body = JSON.stringify(data);
     return this.http.post(this.apiUrl, data, this.options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+  delete(controllerName: string, actionName: string): Observable<any>{
+    this.setController(controllerName);
+    this.setAction(actionName);
+    this.buildApiUrl();
+    
+    //let body = JSON.stringify(data);
+    return this.http.post(this.apiUrl, this.options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
